@@ -36,12 +36,35 @@ sumlist (x:xs) = x + sumlist xs
 	
 -- myzip
 -- don't forget to put the type declaration or you will lose points!
-myzip = undefined
+myzip :: [a] -> [b] -> [(a,b)]
+myzip [] [] = []
+myzip (n) [] = []
+myzip [] (n) = []
+myzip (x) (y) =
+  let
+    hx = head x
+    hy = head y
+    tx = tail x
+    ty = tail y
+  in 
+    [(hx, hy)] ++ myzip tx ty
 
 -- addpairs
 -- don't forget to put the type declaration or you will lose points!
 -- John
-addpairs = undefined
+addpairs :: (Num a) => [a] -> [a] -> [a] 
+addpairs [] [] = []
+addpairs (n) [] = []
+addpairs [] (n) = []
+addpairs (a) (b) = 
+  let
+    ha = head a
+    hb = head b
+    ta = tail a
+    tb = tail b
+  in
+    [(ha + hb)] ++ addpairs ta tb
+--IMPLEMENT WITH MYZIP
 
 -- ones
 -- don't forget to put the type declaration or you will lose points!
@@ -54,7 +77,10 @@ nats = undefined
 -- fib
 -- don't forget to put the type declaration or you will lose points!
 -- John
-fib = undefined
+fib :: Integer -> [Integer]
+fib 0 = [0]
+fib 1 = [0, 1]
+fib n = fib (n-1) : (last (fib(n-1)) + last (fib(n-2)))
 
 -- add
 -- don't forget to put the type declaration or you will lose points!
@@ -63,12 +89,42 @@ add = undefined
 -- union
 -- don't forget to put the type declaration or you will lose points!
 -- Austin
-union = undefined
+union :: Ord a => [a] -> [a] -> [a]
+union [] [] = []
+union (n) [] = (n)
+union [] (n) = (n)
+union (x) (y) =
+  let hx = head x
+      hy = head y
+      tx = tail x
+      ty = tail y
+  in 
+    if hx == hy
+     then [hx] ++ union tx ty
+     else if hx > hy
+       then [hx] ++ union tx y
+       else
+         [hy] ++ union x ty
 
 -- intersect
 -- don't forget to put the type declaration or you will lose points!
 -- Austin
-intersect = undefined
+intersect :: Ord a => [a] -> [a] -> [a]
+intersect [] [] = []
+intersect (n) [] = (n)
+intersect [] (n) = (n)
+intersect (x) (y) =
+  let hx = head x
+      hy = head y
+      tx = tail x
+      ty = tail y
+  in 
+    if hx == hy
+     then intersect tx ty
+     else if hx > hy
+       then [hx] ++ intersect tx y
+       else
+         [hy] ++ intersect x ty
 
 -- powerset
 -- don't forget to put the type declaration or you will lose points!
